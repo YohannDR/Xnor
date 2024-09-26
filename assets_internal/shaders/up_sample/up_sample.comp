@@ -1,0 +1,78 @@
+#version 430 core
+
+#define GroupSize         8
+#define GroupThreadCount (GroupSize * GroupSize)
+#define FilterSize        3
+#define FILTER_RADIUS      (FilterSize / 2)
+#define TileSize          (GroupSize + 2 * FILTER_RADIUS)
+#define TILE_PIXEL_COUNT   (TileSize * TileSize)
+
+layout (local_size_x = GroupSize, local_size_y = GroupSize) in;
+layout(rgba32f, binding = 1) uniform image2D nextMip;
+
+uniform vec2  uTexelSize;
+uniform int   u_mip_level;
+uniform float bloom_intensity;
+uniform sampler2D currentMip;
+
+shared float smR[TILE_PIXEL_COUNT];
+shared float smG[TILE_PIXEL_COUNT];
+shared float smB[TILE_PIXEL_COUNT];
+
+
+
+void StoreLds(int idx, vec4 c)
+{
+    smR[idx] = c.r;
+    smG[idx] = c.g;
+    smB[idx] = c.b;
+}
+
+vec4 LoadLds(int idx)
+{
+    return vec4(smR[idx], smG[idx], smB[idx], 1.0);
+}
+
+void main()
+{
+	ivec2 pixelCoords = ivec2(gl_GlobalInvocationID.xy);
+    vec2  baseIndex   = ivec2(gl_WorkGroupID) * GroupSize - FILTER_RADIUS;
+
+
+    // The first (TILE_PIXEL_COUNT - GroupThreadCount) threads load at most 2 texel values
+    for (int i = int(gl_LocalInvocationIndex); i < TILE_PIXEL_COUNT; i += GroupThreadCount)
+    {
+        vec2 uv        = (baseIndex + 0.5) * uTexelSize;
+        vec2 uvOffset = vec2(i % TileSize, i / TileSize) * uTexelSize;
+        
+        vec4 color = texture(currentMip, (uv + uvOffset));
+        StoreLds(i, color);
+    }
+
+    memoryBarrierShared();
+    barrier();
+
+    // center texel
+    int smIdx = int((gl_LocalInvocationID.x + FILTER_RADIUS) + (gl_LocalInvocationID.y + FILTER_RADIUS) * TileSize);
+
+    // Based on [Jimenez14] http://goo.gl/eomGso
+    vec4 s;
+    s =  LoadLds(smIdx - TileSize - 1);
+    s += LoadLds(smIdx - TileSize    ) * 2.0;
+    s += LoadLds(smIdx - TileSize + 1);
+	
+    s += LoadLds(smIdx - 1) * 2.0;
+    s += LoadLds(smIdx    ) * 4.0;
+    s += LoadLds(smIdx + 1) * 2.0;
+	
+    s += LoadLds(smIdx + TileSize - 1);
+    s += LoadLds(smIdx + TileSize    ) * 2.0;
+    s += LoadLds(smIdx + TileSize + 1);
+
+    vec4 bloom = s * (1.0 / 16.0);
+
+	vec4 outPixel = imageLoad(nextMip, pixelCoords);
+	     outPixel += bloom * bloom_intensity;
+
+	imageStore(nextMip, pixelCoords, outPixel);
+}

@@ -1,0 +1,26 @@
+#version 460 core
+
+#define GroupSize 8
+
+layout (local_size_x = GroupSize, local_size_y = GroupSize) in;
+
+layout(rgba32f, binding = 0) uniform image2D baseImage;
+layout(rgba32f, binding = 1) uniform image2D thresholdTexture;
+
+
+void main()
+{
+    ivec2 pixelCoords = ivec2(gl_GlobalInvocationID.xy);
+    vec4 CurrentPixel = imageLoad(baseImage, pixelCoords);
+    vec3 color = CurrentPixel.rgb;
+
+    float brightness = dot(color, vec3(0.2126, 0.7152, 0.0722));
+    
+    if (brightness <= 1.0)
+    {
+    	imageStore(thresholdTexture, pixelCoords, vec4(0.f));
+    	return;
+    }
+
+	imageStore(thresholdTexture, pixelCoords, CurrentPixel);
+}

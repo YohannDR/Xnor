@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{5be6a8f5-f699-4cdf-977b-4a39badb4c7e}</ProjectGuid>
+    <RootNamespace>XNOR</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);XNOR_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;JPH_SHARED_LIBRARY;JPH_DEBUG_RENDERER;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_PROFILE_ENABLED</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);externals\include;include;inline;externals\inline;..\CoreLibs\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\libs\static\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;assimp.lib;zlibstatic.lib;%(AdditionalDependencies);Coral.Native.lib;Jolt.lib;CoreLibs.lib;OpenAL32.lib;freetype.lib</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:CoreLibs.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "externals\libs\dynamic\$(Configuration)\*" "$(OutDir)"</Command>
+      <Message>Copy external DLL files</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);XNOR_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;JPH_SHARED_LIBRARY</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);externals\include;include;inline;externals\inline;..\CoreLibs\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\libs\static\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;assimp.lib;zlibstatic.lib;%(AdditionalDependencies);Coral.Native.lib;Jolt.lib;CoreLibs.lib;OpenAL32.lib;freetype.lib</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:CoreLibs.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "externals\libs\dynamic\$(Configuration)\*" "$(OutDir)"</Command>
+      <Message>Copy external DLL files</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="externals\include\AL\al.h" />
+    <ClInclude Include="externals\include\AL\alc.h" />
+    <ClInclude Include="externals\include\AL\alext.h" />
+    <ClInclude Include="externals\include\AL\efx-creative.h" />
+    <ClInclude Include="externals\include\AL\efx-presets.h" />
+    <ClInclude Include="externals\include\AL\efx.h" />
+    <ClInclude Include="include\scene\component\enemy_cpp.hpp" />
+    <ClInclude Include="include\scene\component\player_shoot_cpp.hpp" />
+    <ClInclude Include="include\utils\plane.hpp" />
+    <ClInclude Include="include\world\skybox.hpp" />
+    <ClInclude Include="inline\file\file.inl" />
+    <ClInclude Include="inline\file\file_manager.inl" />
+    <ClInclude Include="inline\input\input.inl" />
+    <ClInclude Include="inline\input\low_pass_filter.inl" />
+    <ClInclude Include="inline\input\time.inl" />
+    <ClInclude Include="inline\reflection\dotnet_reflection.inl" />
+    <ClInclude Include="inline\reflection\filters.inl" />
+    <ClInclude Include="inline\reflection\reflection.inl" />
+    <ClInclude Include="inline\reflection\type_renderer.inl" />
+    <ClInclude Include="inline\reflection\type_renderer_impl.inl" />
+    <ClInclude Include="inline\reflection\xnor_factory.inl" />
+    <ClInclude Include="inline\resource\audio_track.inl" />
+    <ClInclude Include="inline\resource\resource_manager.inl" />
+    <ClInclude Include="inline\resource\texture.inl" />
+    <ClInclude Include="inline\scene\entity.inl" />
+    <ClInclude Include="inline\scene\scene.inl" />
+    <ClInclude Include="inline\serialization\serializer.inl" />
+    <ClInclude Include="inline\utils\color.inl" />
+    <ClInclude Include="inline\utils\event.inl" />
+    <ClInclude Include="inline\utils\list.inl" />
+    <ClInclude Include="inline\utils\logger.inl" />
+    <ClInclude Include="inline\utils\pointer.inl" />
+    <ClInclude Include="inline\utils\reference_counter.inl" />
+    <ClInclude Include="inline\utils\timeline.inl" />
+    <ClInclude Include="inline\utils\ts_queue.inl" />
+    <ClInclude Include="inline\utils\utils.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="externals\include\assimp\aabb.h" />
+    <ClInclude Include="externals\include\assimp\ai_assert.h" />
+    <ClInclude Include="externals\include\assimp\anim.h" />
+    <ClInclude Include="externals\include\assimp\AssertHandler.h" />
+    <ClInclude Include="externals\include\assimp\Base64.hpp" />
+    <ClInclude Include="externals\include\assimp\BaseImporter.h" />
+    <ClInclude Include="externals\include\assimp\Bitmap.h" />
+    <ClInclude Include="externals\include\assimp\BlobIOSystem.h" />
+    <ClInclude Include="externals\include\assimp\ByteSwapper.h" />
+    <ClInclude Include="externals\include\assimp\camera.h" />
+    <ClInclude Include="externals\include\assimp\cexport.h" />
+    <ClInclude Include="externals\include\assimp\cfileio.h" />
+    <ClInclude Include="externals\include\assimp\cimport.h" />
+    <ClInclude Include="externals\include\assimp\ColladaMetaData.h" />
+    <ClInclude Include="externals\include\assimp\color4.h" />
+    <ClInclude Include="externals\include\assimp\color4.inl" />
+    <ClInclude Include="externals\include\assimp\commonMetaData.h" />
+    <ClInclude Include="externals\include\assimp\Compiler\poppack1.h" />
+    <ClInclude Include="externals\include\assimp\Compiler\pstdint.h" />
+    <ClInclude Include="externals\include\assimp\Compiler\pushpack1.h" />
+    <ClInclude Include="externals\include\assimp\config.h" />
+    <ClInclude Include="externals\include\assimp\CreateAnimMesh.h" />
+    <ClInclude Include="externals\include\assimp\DefaultIOStream.h" />
+    <ClInclude Include="externals\include\assimp\DefaultIOSystem.h" />
+    <ClInclude Include="externals\include\assimp\DefaultLogger.hpp" />
+    <ClInclude Include="externals\include\assimp\defs.h" />
+    <ClInclude Include="externals\include\assimp\Exceptional.h" />
+    <ClInclude Include="externals\include\assimp\Exporter.hpp" />
+    <ClInclude Include="externals\include\assimp\fast_atof.h" />
+    <ClInclude Include="externals\include\assimp\GenericProperty.h" />
+    <ClInclude Include="externals\include\assimp\GltfMaterial.h" />
+    <ClInclude Include="externals\include\assimp\Hash.h" />
+    <ClInclude Include="externals\include\assimp\Importer.hpp" />
+    <ClInclude Include="externals\include\assimp\importerdesc.h" />
+    <ClInclude Include="externals\include\assimp\IOStream.hpp" />
+    <ClInclude Include="externals\include\assimp\IOStreamBuffer.h" />
+    <ClInclude Include="externals\include\assimp\IOSystem.hpp" />
+    <ClInclude Include="externals\include\assimp\light.h" />
+    <ClInclude Include="externals\include\assimp\LineSplitter.h" />
+    <ClInclude Include="externals\include\assimp\LogAux.h" />
+    <ClInclude Include="externals\include\assimp\Logger.hpp" />
+    <ClInclude Include="externals\include\assimp\LogStream.hpp" />
+    <ClInclude Include="externals\include\assimp\material.h" />
+    <ClInclude Include="externals\include\assimp\material.inl" />
+    <ClInclude Include="externals\include\assimp\MathFunctions.h" />
+    <ClInclude Include="externals\include\assimp\matrix3x3.h" />
+    <ClInclude Include="externals\include\assimp\matrix3x3.inl" />
+    <ClInclude Include="externals\include\assimp\matrix4x4.h" />
+    <ClInclude Include="externals\include\assimp\matrix4x4.inl" />
+    <ClInclude Include="externals\include\assimp\MemoryIOWrapper.h" />
+    <ClInclude Include="externals\include\assimp\mesh.h" />
+    <ClInclude Include="externals\include\assimp\metadata.h" />
+    <ClInclude Include="externals\include\assimp\NullLogger.hpp" />
+    <ClInclude Include="externals\include\assimp\ObjMaterial.h" />
+    <ClInclude Include="externals\include\assimp\ParsingUtils.h" />
+    <ClInclude Include="externals\include\assimp\pbrmaterial.h" />
+    <ClInclude Include="externals\include\assimp\port\AndroidJNI\AndroidJNIIOSystem.h" />
+    <ClInclude Include="externals\include\assimp\port\AndroidJNI\BundledAssetIOSystem.h" />
+    <ClInclude Include="externals\include\assimp\postprocess.h" />
+    <ClInclude Include="externals\include\assimp\Profiler.h" />
+    <ClInclude Include="externals\include\assimp\ProgressHandler.hpp" />
+    <ClInclude Include="externals\include\assimp\qnan.h" />
+    <ClInclude Include="externals\include\assimp\quaternion.h" />
+    <ClInclude Include="externals\include\assimp\quaternion.inl" />
+    <ClInclude Include="externals\include\assimp\RemoveComments.h" />
+    <ClInclude Include="externals\include\assimp\scene.h" />
+    <ClInclude Include="externals\include\assimp\SceneCombiner.h" />
+    <ClInclude Include="externals\include\assimp\SGSpatialSort.h" />
+    <ClInclude Include="externals\include\assimp\SkeletonMeshBuilder.h" />
+    <ClInclude Include="externals\include\assimp\SmallVector.h" />
+    <ClInclude Include="externals\include\assimp\SmoothingGroups.h" />
+    <ClInclude Include="externals\include\assimp\SmoothingGroups.inl" />
+    <ClInclude Include="externals\include\assimp\SpatialSort.h" />
+    <ClInclude Include="externals\include\assimp\StandardShapes.h" />
+    <ClInclude Include="externals\include\assimp\StreamReader.h" />
+    <ClInclude Include="externals\include\assimp\StreamWriter.h" />
+    <ClInclude Include="externals\include\assimp\StringComparison.h" />
+    <ClInclude Include="externals\include\assimp\StringUtils.h" />
+    <ClInclude Include="externals\include\assimp\Subdivision.h" />
+    <ClInclude Include="externals\include\assimp\texture.h" />
+    <ClInclude Include="externals\include\assimp\TinyFormatter.h" />
+    <ClInclude Include="externals\include\assimp\types.h" />
+    <ClInclude Include="externals\include\assimp\vector2.h" />
+    <ClInclude Include="externals\include\assimp\vector2.inl" />
+    <ClInclude Include="externals\include\assimp\vector3.h" />
+    <ClInclude Include="externals\include\assimp\vector3.inl" />
+    <ClInclude Include="externals\include\assimp\version.h" />
+    <ClInclude Include="externals\include\assimp\Vertex.h" />
+    <ClInclude Include="externals\include\assimp\XmlParser.h" />
+    <ClInclude Include="externals\include\assimp\XMLTools.h" />
+    <ClInclude Include="externals\include\assimp\ZipArchiveIOSystem.h" />
+    <ClInclude Include="externals\include\Coral\Array.hpp" />
+    <ClInclude Include="externals\include\Coral\Assembly.hpp" />
+    <ClInclude Include="externals\include\Coral\Attribute.hpp" />
+    <ClInclude Include="externals\include\Coral\Core.hpp" />
+    <ClInclude Include="externals\include\Coral\FieldInfo.hpp" />
+    <ClInclude Include="externals\include\Coral\GC.hpp" />
+    <ClInclude Include="externals\include\Coral\HostInstance.hpp" />
+    <ClInclude Include="externals\include\Coral\ManagedObject.hpp" />
+    <ClInclude Include="externals\include\Coral\Memory.hpp" />
+    <ClInclude Include="externals\include\Coral\MessageLevel.hpp" />
+    <ClInclude Include="externals\include\Coral\MethodInfo.hpp" />
+    <ClInclude Include="externals\include\Coral\PropertyInfo.hpp" />
+    <ClInclude Include="externals\include\Coral\StableVector.hpp" />
+    <ClInclude Include="externals\include\Coral\String.hpp" />
+    <ClInclude Include="externals\include\Coral\StringHelper.hpp" />
+    <ClInclude Include="externals\include\Coral\Type.hpp" />
+    <ClInclude Include="externals\include\Coral\TypeCache.hpp" />
+    <ClInclude Include="externals\include\Coral\Utility.hpp" />
+    <ClInclude Include="externals\include\jolt\AABBTree\AABBTreeBuilder.h" />
+    <ClInclude Include="externals\include\jolt\AABBTree\AABBTreeToBuffer.h" />
+    <ClInclude Include="externals\include\jolt\AABBTree\NodeCodec\NodeCodecQuadTreeHalfFloat.h" />
+    <ClInclude Include="externals\include\jolt\AABBTree\TriangleCodec\TriangleCodecIndexed8BitPackSOA4Flags.h" />
+    <ClInclude Include="externals\include\jolt\ConfigurationString.h" />
+    <ClInclude Include="externals\include\jolt\Core\ARMNeon.h" />
+    <ClInclude Include="externals\include\jolt\Core\Atomics.h" />
+    <ClInclude Include="externals\include\jolt\Core\ByteBuffer.h" />
+    <ClInclude Include="externals\include\jolt\Core\Color.h" />
+    <ClInclude Include="externals\include\jolt\Core\Core.h" />
+    <ClInclude Include="externals\include\jolt\Core\Factory.h" />
+    <ClInclude Include="externals\include\jolt\Core\FixedSizeFreeList.h" />
+    <ClInclude Include="externals\include\jolt\Core\FixedSizeFreeList.inl" />
+    <ClInclude Include="externals\include\jolt\Core\FPControlWord.h" />
+    <ClInclude Include="externals\include\jolt\Core\FPException.h" />
+    <ClInclude Include="externals\include\jolt\Core\FPFlushDenormals.h" />
+    <ClInclude Include="externals\include\jolt\Core\HashCombine.h" />
+    <ClInclude Include="externals\include\jolt\Core\InsertionSort.h" />
+    <ClInclude Include="externals\include\jolt\Core\IssueReporting.h" />
+    <ClInclude Include="externals\include\jolt\Core\JobSystem.h" />
+    <ClInclude Include="externals\include\jolt\Core\JobSystem.inl" />
+    <ClInclude Include="externals\include\jolt\Core\JobSystemSingleThreaded.h" />
+    <ClInclude Include="externals\include\jolt\Core\JobSystemThreadPool.h" />
+    <ClInclude Include="externals\include\jolt\Core\JobSystemWithBarrier.h" />
+    <ClInclude Include="externals\include\jolt\Core\LinearCurve.h" />
+    <ClInclude Include="externals\include\jolt\Core\LockFreeHashMap.h" />
+    <ClInclude Include="externals\include\jolt\Core\LockFreeHashMap.inl" />
+    <ClInclude Include="externals\include\jolt\Core\Memory.h" />
+    <ClInclude Include="externals\include\jolt\Core\Mutex.h" />
+    <ClInclude Include="externals\include\jolt\Core\MutexArray.h" />
+    <ClInclude Include="externals\include\jolt\Core\NonCopyable.h" />
+    <ClInclude Include="externals\include\jolt\Core\Profiler.h" />
+    <ClInclude Include="externals\include\jolt\Core\Profiler.inl" />
+    <ClInclude Include="externals\include\jolt\Core\QuickSort.h" />
+    <ClInclude Include="externals\include\jolt\Core\Reference.h" />
+    <ClInclude Include="externals\include\jolt\Core\Result.h" />
+    <ClInclude Include="externals\include\jolt\Core\RTTI.h" />
+    <ClInclude Include="externals\include\jolt\Core\Semaphore.h" />
+    <ClInclude Include="externals\include\jolt\Core\StaticArray.h" />
+    <ClInclude Include="externals\include\jolt\Core\STLAlignedAllocator.h" />
+    <ClInclude Include="externals\include\jolt\Core\STLAllocator.h" />
+    <ClInclude Include="externals\include\jolt\Core\STLTempAllocator.h" />
+    <ClInclude Include="externals\include\jolt\Core\StreamIn.h" />
+    <ClInclude Include="externals\include\jolt\Core\StreamOut.h" />
+    <ClInclude Include="externals\include\jolt\Core\StreamUtils.h" />
+    <ClInclude Include="externals\include\jolt\Core\StreamWrapper.h" />
+    <ClInclude Include="externals\include\jolt\Core\StringTools.h" />
+    <ClInclude Include="externals\include\jolt\Core\TempAllocator.h" />
+    <ClInclude Include="externals\include\jolt\Core\TickCounter.h" />
+    <ClInclude Include="externals\include\jolt\Core\UnorderedMap.h" />
+    <ClInclude Include="externals\include\jolt\Core\UnorderedSet.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\AABox.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\AABox4.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\ClipPoly.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\ClosestPoint.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\ConvexHullBuilder.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\ConvexHullBuilder2D.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\ConvexSupport.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\Ellipse.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\EPAConvexHullBuilder.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\EPAPenetrationDepth.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\GJKClosestPoint.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\IndexedTriangle.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\Indexify.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\MortonCode.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\OrientedBox.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\Plane.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\RayAABox.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\RayAABox8.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\RayCapsule.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\RayCylinder.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\RaySphere.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\RayTriangle.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\RayTriangle8.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\Sphere.h" />
+    <ClInclude Include="externals\include\jolt\Geometry\Triangle.h" />
+    <ClInclude Include="externals\include\jolt\Jolt.h" />
+    <ClInclude Include="externals\include\jolt\Math\DMat44.h" />
+    <ClInclude Include="externals\include\jolt\Math\Double3.h" />
+    <ClInclude Include="externals\include\jolt\Math\DVec3.h" />
+    <ClInclude Include="externals\include\jolt\Math\DynMatrix.h" />
+    <ClInclude Include="externals\include\jolt\Math\EigenValueSymmetric.h" />
+    <ClInclude Include="externals\include\jolt\Math\FindRoot.h" />
+    <ClInclude Include="externals\include\jolt\Math\Float2.h" />
+    <ClInclude Include="externals\include\jolt\Math\Float3.h" />
+    <ClInclude Include="externals\include\jolt\Math\Float4.h" />
+    <ClInclude Include="externals\include\jolt\Math\GaussianElimination.h" />
+    <ClInclude Include="externals\include\jolt\Math\HalfFloat.h" />
+    <ClInclude Include="externals\include\jolt\Math\Mat44.h" />
+    <ClInclude Include="externals\include\jolt\Math\Math.h" />
+    <ClInclude Include="externals\include\jolt\Math\MathTypes.h" />
+    <ClInclude Include="externals\include\jolt\Math\Matrix.h" />
+    <ClInclude Include="externals\include\jolt\Math\Quat.h" />
+    <ClInclude Include="externals\include\jolt\Math\Real.h" />
+    <ClInclude Include="externals\include\jolt\Math\Swizzle.h" />
+    <ClInclude Include="externals\include\jolt\Math\Trigonometry.h" />
+    <ClInclude Include="externals\include\jolt\Math\UVec4.h" />
+    <ClInclude Include="externals\include\jolt\Math\UVec8.h" />
+    <ClInclude Include="externals\include\jolt\Math\Vec3.h" />
+    <ClInclude Include="externals\include\jolt\Math\Vec4.h" />
+    <ClInclude Include="externals\include\jolt\Math\Vec8.h" />
+    <ClInclude Include="externals\include\jolt\Math\Vector.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\GetPrimitiveTypeOfType.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\ObjectStream.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\ObjectStreamBinaryIn.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\ObjectStreamBinaryOut.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\ObjectStreamIn.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\ObjectStreamOut.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\ObjectStreamTextIn.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\ObjectStreamTextOut.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\ObjectStreamTypes.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\SerializableAttribute.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\SerializableAttributeEnum.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\SerializableAttributeTyped.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\SerializableObject.h" />
+    <ClInclude Include="externals\include\jolt\ObjectStream\TypeDeclarations.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\AllowedDOFs.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\Body.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\Body.inl" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyAccess.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyActivationListener.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyCreationSettings.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyFilter.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyID.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyInterface.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyLock.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyLockInterface.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyLockMulti.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyManager.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyPair.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\BodyType.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\MassProperties.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\MotionProperties.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\MotionProperties.inl" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\MotionQuality.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Body\MotionType.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Character\Character.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Character\CharacterBase.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Character\CharacterVirtual.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\AABoxCast.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\ActiveEdgeMode.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\ActiveEdges.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\BackFaceMode.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\BroadPhase\BroadPhase.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\BroadPhase\BroadPhaseBruteForce.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\BroadPhase\BroadPhaseLayer.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\BroadPhase\BroadPhaseQuadTree.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\BroadPhase\BroadPhaseQuery.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\BroadPhase\QuadTree.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CastConvexVsTriangles.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CastResult.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CastSphereVsTriangles.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CollectFacesMode.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CollideConvexVsTriangles.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CollidePointResult.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CollideShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CollideSphereVsTriangles.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CollisionCollector.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CollisionCollectorImpl.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CollisionDispatch.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\CollisionGroup.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\ContactListener.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\EstimateCollisionResponse.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\GroupFilter.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\GroupFilterTable.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\ManifoldBetweenTwoFaces.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\NarrowPhaseQuery.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\NarrowPhaseStats.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\ObjectLayer.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\PhysicsMaterial.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\PhysicsMaterialSimple.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\RayCast.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\ShapeCast.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\ShapeFilter.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\BoxShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\CapsuleShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\CompoundShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\CompoundShapeVisitors.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\ConvexHullShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\ConvexShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\CylinderShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\DecoratedShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\GetTrianglesContext.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\HeightFieldShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\MeshShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\MutableCompoundShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\OffsetCenterOfMassShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\PolyhedronSubmergedVolumeCalculator.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\RotatedTranslatedShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\ScaledShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\ScaleHelpers.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\Shape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\SphereShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\StaticCompoundShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\SubShapeID.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\SubShapeIDPair.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\TaperedCapsuleShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\Shape\TriangleShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\SortReverseAndStore.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Collision\TransformedShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConeConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\Constraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintManager.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\AngleConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\AxisConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\DualAxisConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\GearConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\HingeRotationConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\IndependentAxisConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\PointConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\RackAndPinionConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\RotationEulerConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\RotationQuatConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\SpringPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ConstraintPart\SwingTwistConstraintPart.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\ContactConstraintManager.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\DistanceConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\FixedConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\GearConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\HingeConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\MotorSettings.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\PathConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\PathConstraintPath.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\PathConstraintPathHermite.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\PointConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\PulleyConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\RackAndPinionConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\SixDOFConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\SliderConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\SpringSettings.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\SwingTwistConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Constraints\TwoBodyConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\DeterminismLog.h" />
+    <ClInclude Include="externals\include\jolt\Physics\EActivation.h" />
+    <ClInclude Include="externals\include\jolt\Physics\EPhysicsUpdateError.h" />
+    <ClInclude Include="externals\include\jolt\Physics\IslandBuilder.h" />
+    <ClInclude Include="externals\include\jolt\Physics\LargeIslandSplitter.h" />
+    <ClInclude Include="externals\include\jolt\Physics\PhysicsLock.h" />
+    <ClInclude Include="externals\include\jolt\Physics\PhysicsScene.h" />
+    <ClInclude Include="externals\include\jolt\Physics\PhysicsSettings.h" />
+    <ClInclude Include="externals\include\jolt\Physics\PhysicsStepListener.h" />
+    <ClInclude Include="externals\include\jolt\Physics\PhysicsSystem.h" />
+    <ClInclude Include="externals\include\jolt\Physics\PhysicsUpdateContext.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Ragdoll\Ragdoll.h" />
+    <ClInclude Include="externals\include\jolt\Physics\SoftBody\SoftBodyCreationSettings.h" />
+    <ClInclude Include="externals\include\jolt\Physics\SoftBody\SoftBodyMotionProperties.h" />
+    <ClInclude Include="externals\include\jolt\Physics\SoftBody\SoftBodyShape.h" />
+    <ClInclude Include="externals\include\jolt\Physics\SoftBody\SoftBodySharedSettings.h" />
+    <ClInclude Include="externals\include\jolt\Physics\SoftBody\SoftBodyUpdateContext.h" />
+    <ClInclude Include="externals\include\jolt\Physics\SoftBody\SoftBodyVertex.h" />
+    <ClInclude Include="externals\include\jolt\Physics\StateRecorder.h" />
+    <ClInclude Include="externals\include\jolt\Physics\StateRecorderImpl.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\MotorcycleController.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\TrackedVehicleController.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\VehicleAntiRollBar.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\VehicleCollisionTester.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\VehicleConstraint.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\VehicleController.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\VehicleDifferential.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\VehicleEngine.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\VehicleTrack.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\VehicleTransmission.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\Wheel.h" />
+    <ClInclude Include="externals\include\jolt\Physics\Vehicle\WheeledVehicleController.h" />
+    <ClInclude Include="externals\include\jolt\RegisterTypes.h" />
+    <ClInclude Include="externals\include\jolt\Renderer\DebugRenderer.h" />
+    <ClInclude Include="externals\include\jolt\Renderer\DebugRendererPlayback.h" />
+    <ClInclude Include="externals\include\jolt\Renderer\DebugRendererRecorder.h" />
+    <ClInclude Include="externals\include\jolt\Skeleton\SkeletalAnimation.h" />
+    <ClInclude Include="externals\include\jolt\Skeleton\Skeleton.h" />
+    <ClInclude Include="externals\include\jolt\Skeleton\SkeletonMapper.h" />
+    <ClInclude Include="externals\include\jolt\Skeleton\SkeletonPose.h" />
+    <ClInclude Include="externals\include\jolt\TriangleGrouper\TriangleGrouper.h" />
+    <ClInclude Include="externals\include\jolt\TriangleGrouper\TriangleGrouperClosestCentroid.h" />
+    <ClInclude Include="externals\include\jolt\TriangleGrouper\TriangleGrouperMorton.h" />
+    <ClInclude Include="externals\include\jolt\TriangleSplitter\TriangleSplitter.h" />
+    <ClInclude Include="externals\include\jolt\TriangleSplitter\TriangleSplitterBinning.h" />
+    <ClInclude Include="externals\include\jolt\TriangleSplitter\TriangleSplitterFixedLeafSize.h" />
+    <ClInclude Include="externals\include\jolt\TriangleSplitter\TriangleSplitterLongestAxis.h" />
+    <ClInclude Include="externals\include\jolt\TriangleSplitter\TriangleSplitterMean.h" />
+    <ClInclude Include="externals\include\jolt\TriangleSplitter\TriangleSplitterMorton.h" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_all.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_containers.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_flags.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_format.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_fuse.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_iostream.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_switch.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_utility.hpp" />
+    <ClInclude Include="externals\include\refl\refl.hpp" />
+    <ClInclude Include="include\application.hpp" />
+    <ClInclude Include="include\audio\audio.hpp" />
+    <ClInclude Include="include\audio\audio_buffer.hpp" />
+    <ClInclude Include="include\audio\audio_context.hpp" />
+    <ClInclude Include="include\audio\audio_device.hpp" />
+    <ClInclude Include="include\audio\component\audio_listener.hpp" />
+    <ClInclude Include="include\audio\component\audio_source.hpp" />
+    <ClInclude Include="include\core.hpp" />
+    <ClInclude Include="include\csharp\dotnet_assembly.hpp" />
+    <ClInclude Include="include\csharp\dotnet_constants.hpp" />
+    <ClInclude Include="include\csharp\dotnet_runtime.hpp" />
+    <ClInclude Include="include\csharp\dotnet_utils.hpp" />
+    <ClInclude Include="include\data_structure\object_bounding.hpp" />
+    <ClInclude Include="include\data_structure\octree.hpp" />
+    <ClInclude Include="include\data_structure\octree_iterator.hpp" />
+    <ClInclude Include="include\data_structure\octree_node.hpp" />
+    <ClInclude Include="include\file\directory.hpp" />
+    <ClInclude Include="include\file\entry.hpp" />
+    <ClInclude Include="include\file\file.hpp" />
+    <ClInclude Include="include\file\file_manager.hpp" />
+    <ClInclude Include="include\input\gamepad_input.hpp" />
+    <ClInclude Include="include\input\input.hpp" />
+    <ClInclude Include="include\input\keyboard_input.hpp" />
+    <ClInclude Include="include\input\low_pass_filter.hpp" />
+    <ClInclude Include="include\input\mouse_input.hpp" />
+    <ClInclude Include="include\input\time.hpp" />
+    <ClInclude Include="include\physics\body_activation_listener.hpp" />
+    <ClInclude Include="include\physics\broad_phase_layer_interface.hpp" />
+    <ClInclude Include="include\physics\component\box_collider.hpp" />
+    <ClInclude Include="include\physics\component\capsule_collider.hpp" />
+    <ClInclude Include="include\physics\component\collider.hpp" />
+    <ClInclude Include="include\physics\component\mesh_collider.hpp" />
+    <ClInclude Include="include\physics\component\sphere_collider.hpp" />
+    <ClInclude Include="include\physics\contact_listener.hpp" />
+    <ClInclude Include="include\physics\data\collision_data.hpp" />
+    <ClInclude Include="include\physics\layers.hpp" />
+    <ClInclude Include="include\physics\physics_world.hpp" />
+    <ClInclude Include="include\reflection\dotnet_reflection.hpp" />
+    <ClInclude Include="include\reflection\filters.hpp" />
+    <ClInclude Include="include\reflection\reflection.hpp" />
+    <ClInclude Include="include\reflection\type_renderer.hpp" />
+    <ClInclude Include="include\reflection\xnor_factory.hpp" />
+    <ClInclude Include="include\rendering\animator.hpp" />
+    <ClInclude Include="include\rendering\bloom_render_target.hpp" />
+    <ClInclude Include="include\rendering\bone.hpp" />
+    <ClInclude Include="include\rendering\buffer\uniform_buffer.hpp" />
+    <ClInclude Include="include\rendering\buffer\vao.hpp" />
+    <ClInclude Include="include\rendering\buffer\vbo.hpp" />
+    <ClInclude Include="include\rendering\camera.hpp" />
+    <ClInclude Include="include\rendering\draw_gizmo.hpp" />
+    <ClInclude Include="include\rendering\frame_buffer.hpp" />
+    <ClInclude Include="include\rendering\frustum.hpp" />
+    <ClInclude Include="include\rendering\light\cascade_shadow_map.hpp" />
+    <ClInclude Include="include\rendering\light\directional_light.hpp" />
+    <ClInclude Include="include\rendering\light\light.hpp" />
+    <ClInclude Include="include\rendering\light\point_light.hpp" />
+    <ClInclude Include="include\rendering\light\spot_light.hpp" />
+    <ClInclude Include="include\rendering\material.hpp" />
+    <ClInclude Include="include\rendering\post_process_render_target.hpp" />
+    <ClInclude Include="include\rendering\renderer.hpp" />
+    <ClInclude Include="include\rendering\render_pass.hpp" />
+    <ClInclude Include="include\rendering\render_systems\bloom_pass.hpp" />
+    <ClInclude Include="include\rendering\render_systems\gui_pass.hpp" />
+    <ClInclude Include="include\rendering\render_systems\light_manager.hpp" />
+    <ClInclude Include="include\rendering\render_systems\meshes_drawer.hpp" />
+    <ClInclude Include="include\rendering\render_systems\post_process_pass.hpp" />
+    <ClInclude Include="include\rendering\render_systems\skybox_parser.hpp" />
+    <ClInclude Include="include\rendering\render_systems\skybox_renderer.hpp" />
+    <ClInclude Include="include\rendering\render_systems\tone_mapping.hpp" />
+    <ClInclude Include="include\rendering\rhi.hpp" />
+    <ClInclude Include="include\rendering\rhi_typedef.hpp" />
+    <ClInclude Include="include\rendering\vertex.hpp" />
+    <ClInclude Include="include\rendering\viewport.hpp" />
+    <ClInclude Include="include\rendering\viewport_data.hpp" />
+    <ClInclude Include="include\resource\animation.hpp" />
+    <ClInclude Include="include\resource\animation_montage.hpp" />
+    <ClInclude Include="include\resource\audio_track.hpp" />
+    <ClInclude Include="include\resource\compute_shader.hpp" />
+    <ClInclude Include="include\resource\font.hpp" />
+    <ClInclude Include="include\resource\mesh.hpp" />
+    <ClInclude Include="include\resource\model.hpp" />
+    <ClInclude Include="include\resource\resource.hpp" />
+    <ClInclude Include="include\resource\resource_manager.hpp" />
+    <ClInclude Include="include\resource\shader.hpp" />
+    <ClInclude Include="include\resource\skeleton.hpp" />
+    <ClInclude Include="include\resource\texture.hpp" />
+    <ClInclude Include="include\scene\component.hpp" />
+    <ClInclude Include="include\scene\component\button.hpp" />
+    <ClInclude Include="include\scene\component\camera_component.hpp" />
+    <ClInclude Include="include\scene\component\gui_component.hpp" />
+    <ClInclude Include="include\scene\component\image.hpp" />
+    <ClInclude Include="include\scene\component\script_component.hpp" />
+    <ClInclude Include="include\scene\component\skinned_mesh_renderer.hpp" />
+    <ClInclude Include="include\scene\component\static_mesh_renderer.hpp" />
+    <ClInclude Include="include\scene\component\text_component.hpp" />
+    <ClInclude Include="include\scene\entity.hpp" />
+    <ClInclude Include="include\scene\scene.hpp" />
+    <ClInclude Include="include\screen.hpp" />
+    <ClInclude Include="include\serialization\serializer.hpp" />
+    <ClInclude Include="include\transform.hpp" />
+    <ClInclude Include="include\utils\bound.hpp" />
+    <ClInclude Include="include\utils\color.hpp" />
+    <ClInclude Include="include\utils\concepts.hpp" />
+    <ClInclude Include="include\utils\coroutine.hpp" />
+    <ClInclude Include="include\utils\event.hpp" />
+    <ClInclude Include="include\utils\file_system_watcher.hpp" />
+    <ClInclude Include="include\utils\formatter.hpp" />
+    <ClInclude Include="include\utils\guid.hpp" />
+    <ClInclude Include="include\utils\list.hpp" />
+    <ClInclude Include="include\utils\logger.hpp" />
+    <ClInclude Include="include\utils\message_box.hpp" />
+    <ClInclude Include="include\utils\meta_programming.hpp" />
+    <ClInclude Include="include\utils\pointer.hpp" />
+    <ClInclude Include="include\utils\reference_counter.hpp" />
+    <ClInclude Include="include\utils\timeline.hpp" />
+    <ClInclude Include="include\utils\ts_queue.hpp" />
+    <ClInclude Include="include\utils\utils.hpp" />
+    <ClInclude Include="include\utils\windows.hpp" />
+    <ClInclude Include="include\window.hpp" />
+    <ClInclude Include="include\world\scene_graph.hpp" />
+    <ClInclude Include="include\world\world.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="externals\include\assimp\.editorconfig" />
+    <Content Include="externals\include\assimp\config.h.in" />
+    <Content Include="externals\include\jolt\Physics\Collision\Shape\TaperedCapsuleShape.gliffy" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="externals\include\jolt\Jolt.natvis" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ItemGroup>
+    <CoralManagedFiles Include="$(ProjectDir)externals\managed\Coral\$(Configuration)\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\application.cpp" />
+    <ClCompile Include="src\audio\audio.cpp" />
+    <ClCompile Include="src\audio\audio_buffer.cpp" />
+    <ClCompile Include="src\audio\audio_context.cpp" />
+    <ClCompile Include="src\audio\audio_device.cpp" />
+    <ClCompile Include="src\audio\component\audio_listener.cpp" />
+    <ClCompile Include="src\audio\component\audio_source.cpp" />
+    <ClCompile Include="src\csharp\dotnet_assembly.cpp" />
+    <ClCompile Include="src\csharp\dotnet_runtime.cpp" />
+    <ClCompile Include="src\csharp\dotnet_utils.cpp" />
+    <ClCompile Include="src\data_structure\object_bounding.cpp" />
+    <ClCompile Include="src\data_structure\octree.cpp" />
+    <ClCompile Include="src\data_structure\octree_iterator.cpp" />
+    <ClCompile Include="src\data_structure\octree_node.cpp" />
+    <ClCompile Include="src\file\directory.cpp" />
+    <ClCompile Include="src\file\entry.cpp" />
+    <ClCompile Include="src\file\file.cpp" />
+    <ClCompile Include="src\file\file_manager.cpp" />
+    <ClCompile Include="src\input\gamepad_input.cpp" />
+    <ClCompile Include="src\input\input.cpp" />
+    <ClCompile Include="src\input\low_pass_filter.cpp" />
+    <ClCompile Include="src\input\time.cpp" />
+    <ClCompile Include="src\physics\body_activation_listener.cpp" />
+    <ClCompile Include="src\physics\broad_phase_layer_interface.cpp" />
+    <ClCompile Include="src\physics\component\box_collider.cpp" />
+    <ClCompile Include="src\physics\component\capsule_collider.cpp" />
+    <ClCompile Include="src\physics\component\collider.cpp" />
+    <ClCompile Include="src\physics\component\mesh_collider.cpp" />
+    <ClCompile Include="src\physics\component\sphere_collider.cpp" />
+    <ClCompile Include="src\physics\contact_listener.cpp" />
+    <ClCompile Include="src\physics\physics_world.cpp" />
+    <ClCompile Include="src\reflection\dotnet_reflection.cpp" />
+    <ClCompile Include="src\reflection\filters.cpp" />
+    <ClCompile Include="src\reflection\reflection.cpp" />
+    <ClCompile Include="src\reflection\type_renderer.cpp" />
+    <ClCompile Include="src\reflection\xnor_factory.cpp" />
+    <ClCompile Include="src\rendering\animator.cpp" />
+    <ClCompile Include="src\rendering\bloom_rendertarget.cpp" />
+    <ClCompile Include="src\rendering\bone.cpp" />
+    <ClCompile Include="src\rendering\buffer\uniformBuffer.cpp" />
+    <ClCompile Include="src\rendering\buffer\vao.cpp" />
+    <ClCompile Include="src\rendering\buffer\vbo.cpp" />
+    <ClCompile Include="src\rendering\camera.cpp" />
+    <ClCompile Include="src\rendering\draw_gizmo.cpp" />
+    <ClCompile Include="src\rendering\frame_buffer.cpp" />
+    <ClCompile Include="src\rendering\frustum.cpp" />
+    <ClCompile Include="src\rendering\light\cascade_shadow_map.cpp" />
+    <ClCompile Include="src\rendering\light\directional_light.cpp" />
+    <ClCompile Include="src\rendering\light\light.cpp" />
+    <ClCompile Include="src\rendering\light\point_light.cpp" />
+    <ClCompile Include="src\rendering\light\spot_light.cpp" />
+    <ClCompile Include="src\rendering\material.cpp" />
+    <ClCompile Include="src\rendering\postprocess_rendertarget.cpp" />
+    <ClCompile Include="src\rendering\renderer.cpp" />
+    <ClCompile Include="src\rendering\render_pass.cpp" />
+    <ClCompile Include="src\rendering\render_systems\animation_render.cpp" />
+    <ClCompile Include="src\rendering\render_systems\bloom_pass.cpp" />
+    <ClCompile Include="src\rendering\render_systems\gui_pass.cpp" />
+    <ClCompile Include="src\rendering\render_systems\light_manager.cpp" />
+    <ClCompile Include="src\rendering\render_systems\meshes_drawer.cpp" />
+    <ClCompile Include="src\rendering\render_systems\post_process_pass.cpp" />
+    <ClCompile Include="src\rendering\render_systems\skybox_parser.cpp" />
+    <ClCompile Include="src\rendering\render_systems\skybox_renderer.cpp" />
+    <ClCompile Include="src\rendering\render_systems\tone_mapping.cpp" />
+    <ClCompile Include="src\rendering\rhi.cpp" />
+    <ClCompile Include="src\rendering\vertex.cpp" />
+    <ClCompile Include="src\rendering\viewport.cpp" />
+    <ClCompile Include="src\rendering\viewport_data.cpp" />
+    <ClCompile Include="src\resource\animation.cpp" />
+    <ClCompile Include="src\resource\animation_montage.cpp" />
+    <ClCompile Include="src\resource\audio_track.cpp" />
+    <ClCompile Include="src\resource\compute_shader.cpp" />
+    <ClCompile Include="src\resource\font.cpp" />
+    <ClCompile Include="src\resource\mesh.cpp" />
+    <ClCompile Include="src\resource\model.cpp" />
+    <ClCompile Include="src\resource\resource.cpp" />
+    <ClCompile Include="src\resource\resource_manager.cpp" />
+    <ClCompile Include="src\resource\shader.cpp" />
+    <ClCompile Include="src\resource\skeleton.cpp" />
+    <ClCompile Include="src\resource\texture.cpp" />
+    <ClCompile Include="src\scene\component.cpp" />
+    <ClCompile Include="src\scene\component\button.cpp" />
+    <ClCompile Include="src\scene\component\camera_component.cpp" />
+    <ClCompile Include="src\scene\component\enemy_cpp.cpp" />
+    <ClCompile Include="src\scene\component\gui_component.cpp" />
+    <ClCompile Include="src\scene\component\image.cpp" />
+    <ClCompile Include="src\scene\component\player_shoot_cpp.cpp"/>
+    <ClCompile Include="src\scene\component\script_component.cpp" />
+    <ClCompile Include="src\scene\component\skinned_mesh_renderer.cpp" />
+    <ClCompile Include="src\scene\component\static_mesh_renderer.cpp" />
+    <ClCompile Include="src\scene\component\text_component.cpp" />
+    <ClCompile Include="src\scene\entity.cpp" />
+    <ClCompile Include="src\scene\scene.cpp" />
+    <ClCompile Include="src\screen.cpp" />
+    <ClCompile Include="src\serialization\serializer.cpp" />
+    <ClCompile Include="src\transform.cpp" />
+    <ClCompile Include="src\utils\bound.cpp" />
+    <ClCompile Include="src\utils\coroutine.cpp" />
+    <ClCompile Include="src\utils\file_system_watcher.cpp" />
+    <ClCompile Include="src\utils\guid.cpp" />
+    <ClCompile Include="src\utils\logger.cpp" />
+    <ClCompile Include="src\utils\message_box.cpp" />
+    <ClCompile Include="src\utils\plane.cpp"/>
+    <ClCompile Include="src\utils\utils.cpp" />
+    <ClCompile Include="src\utils\windows.cpp" />
+    <ClCompile Include="src\window.cpp" />
+    <ClCompile Include="src\world\scene_graph.cpp" />
+    <ClCompile Include="src\world\skybox.cpp" />
+    <ClCompile Include="src\world\world.cpp" />
+  </ItemGroup>
+  <Target Name="CopyCoralManaged" AfterTargets="Build">
+    <Copy SourceFiles="@(CoralManagedFiles)" DestinationFolder="$(OutDir)\DotnetAssemblies" SkipUnchangedFiles="true" />
+    <Message Text="Copy Coral Managed Assemblies" Importance="high" />
+  </Target>
+</Project>
